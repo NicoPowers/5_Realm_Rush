@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class EditorSnap : MonoBehaviour
+[SelectionBase]
+public class CubeEditor : MonoBehaviour
 {
-    [Range(1f, 20f)][SerializeField] float snapDistance = 10f;
+    [Range(1f, 20f)] [SerializeField] float snapDistance = 10f;
+    [SerializeField] TextMesh textMesh = null;
 
 
 
@@ -17,15 +19,17 @@ public class EditorSnap : MonoBehaviour
 
     void Update()
     {
+        MovementSnap();
 
+    }
+
+    private void MovementSnap()
+    {
         Vector3 snapPos;
         snapPos.x = Mathf.RoundToInt(transform.position.x / snapDistance) * snapDistance;
         snapPos.y = 0f;
         snapPos.z = Mathf.RoundToInt(transform.position.z / snapDistance) * snapDistance;
-
         transform.position = snapPos;
-
-
-
+        textMesh.text = snapPos.x / snapDistance + "," + snapPos.z / snapDistance;
     }
 }
